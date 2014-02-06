@@ -32,8 +32,8 @@ void main()
       vec3 lpos = gl_LightSource[0].position.xyz;
       float d = distance(lpos, vertex.pos);
 
-      vec3 n = vertex.normal;
-      vec3 l = lpos - vertex.pos;
+      vec3 n = normalize(vertex.normal);
+      vec3 l = normalize(lpos - vertex.pos);
       vec3 e = normalize(vertex.pos - l);
       vec3 r = reflect(l, n);
       float mu = 0.3;
