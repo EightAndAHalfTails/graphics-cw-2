@@ -31,10 +31,11 @@ void main()
       //TODO add your code here
       vec3 lpos = gl_LightSource[0].position.xyz;
       float d = distance(lpos, vertex.pos);
+      vec3 cpos = vec3(0.0, 0.0, 1.0);
 
       vec3 n = normalize(vertex.normal);
       vec3 l = normalize(lpos - vertex.pos);
-      vec3 e = normalize(vertex.pos - l);
+      vec3 e = normalize(vertex.pos - cpos);
       vec3 r = reflect(l, n);
       float mu = 0.3;
       
@@ -45,9 +46,9 @@ void main()
 
       vec4 Ia = ambientColor;
       vec4 Id = attenuation * diffuseColor * dot(n, l);
-      vec4 Is = attenuation * specularColor * pow(dot(e, r), mu*specularExponent);
+      vec4 Is = attenuation * specularColor * pow(max(dot(e, r), 0), mu*specularExponent);
 
-      vec4 I = Ia + Id; + Is;
+      vec4 I = Ia + Id + Is;
       vertex.color = I;
       //////////////////////////////
     }
